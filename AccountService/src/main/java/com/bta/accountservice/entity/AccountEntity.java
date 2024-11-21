@@ -1,6 +1,8 @@
 package com.bta.accountservice.entity;
 
+import com.bta.accountservice.user.User;
 import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
 import java.math.BigDecimal;
 
@@ -15,11 +17,14 @@ public class AccountEntity {
     private BigDecimal balance;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
-    //dont forget to change it to be customer entity
-    private AccountEntity customerEntity;
+    @JoinColumn(name = "user_id")
+    private User customerEntity;
 
-    public AccountEntity(Long accountNumber, BigDecimal balance, AccountEntity customerEntity) {
+    public AccountEntity() {
+
+    }
+
+    public AccountEntity(Long accountNumber, BigDecimal balance, User customerEntity) {
         this.accountNumber = accountNumber;
         this.balance = new BigDecimal("50.00");
         this.customerEntity = customerEntity;
@@ -41,11 +46,11 @@ public class AccountEntity {
         this.balance = balance;
     }
 
-    public AccountEntity getCustomerEntity() {
+    public User getCustomerEntity() {
         return customerEntity;
     }
 
-    public void setCustomerEntity(AccountEntity customerEntity) {
+    public void setCustomerEntity(User customerEntity) {
         this.customerEntity = customerEntity;
     }
 }
